@@ -8,8 +8,8 @@ import retrofit2.http.Query
 
 interface CoffeeApi {
     @GET("menu")
-    fun getMenu(@Query("id") id: Int = 4): Call<List<MenuItem>>
+    fun getMenu(@Query("id") id: Int = 1): Call<List<MenuItem>>
 
     @GET("order")
-    fun getOrders(@Query("id") id: Int = 4): Call<OrderItem>
+    fun getOrders(@Query("id") id: Int = 1): Call<OrderItem>
 }

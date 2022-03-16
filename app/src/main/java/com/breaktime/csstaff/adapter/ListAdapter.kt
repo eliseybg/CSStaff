@@ -2,6 +2,7 @@ package com.breaktime.csstaff.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
@@ -66,9 +67,14 @@ class ListAdapter(private val isReady: Boolean, private val picasso: Picasso) :
             bottomSheetDialog.hide()
         }
         val qrBtn = bottomSheetDialog.findViewById<Button>(R.id.qr_code)
-        qrBtn?.setOnClickListener {
-            showBottomSheetQRDialog(binding)
-            bottomSheetDialog.hide()
+        if (items[position].qrCode.isEmpty()) {
+            qrBtn?.visibility = View.GONE
+        }
+        else {
+            qrBtn?.setOnClickListener {
+                showBottomSheetQRDialog(binding, position)
+                bottomSheetDialog.hide()
+            }
         }
         val list = bottomSheetDialog.findViewById<RecyclerView>(R.id.recyclerView)
         list?.adapter = ProductAdapter(items[position])
@@ -76,7 +82,7 @@ class ListAdapter(private val isReady: Boolean, private val picasso: Picasso) :
         bottomSheetDialog.show()
     }
 
-    private fun showBottomSheetQRDialog(binding: OrderItemBinding) {
+    private fun showBottomSheetQRDialog(binding: OrderItemBinding, position: Int) {
         val bottomSheetDialog = BottomSheetDialog(binding.root.context)
         bottomSheetDialog.behavior.peekHeight = 800.px
         bottomSheetDialog.setContentView(R.layout.qr_code_dialog_layout)
@@ -85,6 +91,8 @@ class ListAdapter(private val isReady: Boolean, private val picasso: Picasso) :
         backBtn?.setOnClickListener {
             bottomSheetDialog.hide()
         }
+        val qrCodeImg = bottomSheetDialog.findViewById<ImageView>(R.id.qr_code)
+        Picasso.get().load(items[position].qrCode).fit().centerCrop().into(qrCodeImg)
         bottomSheetDialog.show()
     }
 
