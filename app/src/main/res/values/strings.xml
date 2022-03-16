@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CS Staff</string>
+    <string name="in_progress">In progress</string>
+    <string name="ready">Ready</string>
+    <string name="product_list">Product list</string>
+    <string name="qr_code">QR code</string>
 </resources>
