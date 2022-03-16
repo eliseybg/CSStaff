@@ -4,4 +4,5 @@
     <string name="ready">Ready</string>
     <string name="product_list">Product list</string>
     <string name="qr_code">QR code</string>
+    <string name="dollar">$</string>
 </resources>

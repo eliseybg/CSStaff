@@ -8,4 +8,7 @@ data class Product(
     val sugar: String,
     val syrup: String,
     val volume: String
-)
+) {
+    var img: String = ""
+    var price: String = ""
+}

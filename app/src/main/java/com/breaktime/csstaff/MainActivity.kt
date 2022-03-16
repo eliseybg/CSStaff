@@ -7,7 +7,6 @@ import com.breaktime.csstaff.adapter.ItemData
 import com.breaktime.csstaff.adapter.ListAdapter
 import com.breaktime.csstaff.api.RetrofitInstance
 import com.breaktime.csstaff.databinding.ActivityMainBinding
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -41,26 +40,26 @@ class MainActivity : AppCompatActivity() {
             val inProgressItems = shopOrders.orders.filter { order ->
                 order.endoff.toInt() * 1000 < System.currentTimeMillis()
             }.map { order ->
-                val images = mutableSetOf<String>()
                 order.products.forEach {
                     it.productid.toIntOrNull()?.let { pos ->
-                        if (pos < menu.size)
-                            images.add(menu[pos].image)
+                        if (pos < menu.size) {
+                            it.img = menu[pos].image
+                            it.price = menu[pos].price
+                        }
                     }
                 }
-                ItemData(images, order.orderid)
+                ItemData(order.orderid, order.qr, order.products)
             }
             val readyItems = shopOrders.orders.filter { order ->
                 order.endoff.toInt() * 1000 < System.currentTimeMillis()
             }.map { order ->
-                val images = mutableSetOf<String>()
                 order.products.forEach {
                     it.productid.toIntOrNull()?.let { pos ->
                         if (pos < menu.size)
-                            images.add(menu[pos].image)
+                            it.img = menu[pos].image
                     }
                 }
-                ItemData(images, order.orderid)
+                ItemData(order.orderid, order.qr, order.products)
             }
             withContext(Dispatchers.Main) {
                 readyAdapter.items = readyItems
